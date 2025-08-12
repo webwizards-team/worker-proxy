@@ -1,4 +1,4 @@
-// مسیر پنل مدیریت. می‌توانید آن را تغییر دهید.
+// مسیر پنل
 const ADMIN_PATH = '/_admin'; 
 
 addEventListener('fetch', event => {
