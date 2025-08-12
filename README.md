@@ -50,9 +50,6 @@ https://your-domain.workers.dev/_admin?password=YourPassword
 
 ---
 
-## لایسنس
-MIT
-
-## سازنده
+## 👨🏻‍💻 سازنده
 By **Web Wizards** → [Telegram](https://t.me/WebWizardsTeam)
 
