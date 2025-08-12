@@ -44,7 +44,7 @@ https://your-domain.workers.dev/_admin?password=YourPassword
 ### 5. تنظیم آدرس مقصد (Upstream URL)
 بعد از ورود به پنل، آدرس مقصد خود را وارد کرده و روی **Save Settings** کلیک کنید:
 
-مثال: https://example.com
+مثال: :https://example.com:port
 
 پس از ذخیره، تمام درخواست‌ها از طریق این Worker به آدرس مقصد ارسال می‌شوند.
 
