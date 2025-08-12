@@ -1,5 +1,5 @@
 // مسیر پنل مدیریت. می‌توانید آن را تغییر دهید.
-const ADMIN_PATH = '/_admin'; // استفاده از _ برای جلوگیری از تداخل
+const ADMIN_PATH = '/_admin'; 
 
 addEventListener('fetch', event => {
     const url = new URL(event.request.url);
@@ -10,9 +10,12 @@ addEventListener('fetch', event => {
     }
 });
 
-
+/**
+ * مدیریت درخواست‌های مربوط به پنل ادمین
+ * @param {Request} request
+ */
 async function handleAdminRequest(request) {
-
+    
     const {
         ADMIN_PASSWORD,
         REVERSE_PROXY_KV
@@ -31,6 +34,7 @@ async function handleAdminRequest(request) {
 
     const url = new URL(request.url);
 
+    
     if (request.method === 'POST' && url.pathname === `${ADMIN_PATH}/save`) {
         const formData = await request.formData();
         const password = formData.get('password');
@@ -48,13 +52,16 @@ async function handleAdminRequest(request) {
             });
         }
 
+        
         await REVERSE_PROXY_KV.put('config', JSON.stringify({
             upstreamUrl
         }));
 
+        
         return Response.redirect(`${url.origin}${ADMIN_PATH}?password=${password}&saved=true`, 302);
     }
 
+    
     const password = url.searchParams.get('password');
     if (password !== ADMIN_PASSWORD) {
         return new Response('Access denied. Please provide the correct password in the query string, e.g., ?password=your_pass', {
@@ -62,6 +69,7 @@ async function handleAdminRequest(request) {
         });
     }
 
+    
     const currentConfig = await REVERSE_PROXY_KV.get('config', {
         type: 'json'
     }) || {};
@@ -77,6 +85,10 @@ async function handleAdminRequest(request) {
 }
 
 
+/**
+ * مدیریت درخواست‌های پروکسی
+ * @param {Request} request
+ */
 async function handleProxyRequest(request) {
     const {
         REVERSE_PROXY_KV
@@ -103,7 +115,7 @@ async function handleProxyRequest(request) {
     const upstreamUrl = new URL(config.upstreamUrl);
     const requestUrl = new URL(request.url);
 
-    // ساخت URL جدید برای ارسال به سرور اصلی
+    
     const newUrl = new URL(requestUrl.pathname + requestUrl.search, upstreamUrl.origin);
 
     const newRequest = new Request(newUrl, request);
@@ -116,7 +128,7 @@ async function handleProxyRequest(request) {
 // ----- Helper Functions -----
 
 function getBindings() {
-
+    
     return {
         ADMIN_PASSWORD,
         REVERSE_PROXY_KV,
